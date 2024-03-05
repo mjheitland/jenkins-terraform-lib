@@ -14,8 +14,17 @@ def call(Map config = [:]) {
         set -xeo pipefail
         cd $WORKDIR
         pwd
+        aws --version
         terraform --version
-        terraform init -upgrade
+
+        echo "bucket         = \\"${TF_VAR_tfstate_bucket}\\"" >> config.aws.tfbackend
+        echo "dynamodb_table = \\"terraform-statelock-${ENVIRONMENT_ALIAS}\\"" >> config.aws.tfbackend
+        echo "region         = \\"${TF_VAR_region}\\"" >> config.aws.tfbackend
+        cat config.aws.tfbackend
+        cp config.aws.tfbackend .artifacts/config.aws.tfbackend
+        
+        terraform init -upgrade -backend-config=config.aws.tfbackend
+        
         unset TF_WORKSPACE
         terraform workspace select -or-create $TERRAFORM_WORKSPACE
         terraform workspace list
