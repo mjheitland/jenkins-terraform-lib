@@ -18,7 +18,7 @@ def call(Map config = [:]) {
         terraform --version
 
         echo "bucket         = \\"${TF_VAR_tfstate_bucket}\\"" >> config.aws.tfbackend
-        echo "dynamodb_table = \\"terraform-statelock-${ENVIRONMENT_ALIAS}\\"" >> config.aws.tfbackend
+        echo "dynamodb_table = \\"terraform-statelock-${TF_VAR_environment_alias}\\"" >> config.aws.tfbackend
         echo "region         = \\"${TF_VAR_region}\\"" >> config.aws.tfbackend
         cat config.aws.tfbackend
         cp config.aws.tfbackend $WORKSPACE/.artifacts/config.aws.tfbackend
