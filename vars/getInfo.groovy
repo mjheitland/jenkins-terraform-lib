@@ -5,7 +5,7 @@ def call(Map config = [:]) {
         ls -al
         git --version
         git remote -v
-        # git tag
+        git tag
         echo "branch: $BRANCH_NAME"
         uname -a
         env | sort
