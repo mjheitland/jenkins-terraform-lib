@@ -8,7 +8,7 @@ def call(Map config = [:]) {
         set -xeo pipefail
         go version
         go env -w GOPRIVATE=* # https://proxy.golang.org,direct
-        go get ./...
+        go get -x ./...
         go mod tidy
         go test -timeout $TF_TEST_TIMEOUT -v ./test/integration | tee $WORKSPACE/.artifacts/test-results.txt
     '''
