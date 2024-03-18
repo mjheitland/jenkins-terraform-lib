@@ -8,6 +8,7 @@ def call(Map config = [:]) {
         set -xeo pipefail
         go version
         go env -w GOPROXY=direct # https://proxy.golang.org,direct
+        wget -O- https://cloud.google.com/go 
         go get ./...
         go mod tidy
         go test -timeout $TF_TEST_TIMEOUT -v ./test/integration | tee $WORKSPACE/.artifacts/test-results.txt
