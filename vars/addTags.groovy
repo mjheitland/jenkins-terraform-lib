@@ -15,6 +15,7 @@ def call(Map config = [:]) {
     }
     env.GIT_USER_EMAIL = config.gitUserEmail
 
+    sshagent (credentials: ['jenkins_repo_access']) {
     sh '''#!/usr/bin/env bash
         set -xeo pipefail
         echo "next version: $NEXT_VERSION"
@@ -39,4 +40,5 @@ def call(Map config = [:]) {
         git push origin "${major_version}.${minor_version}"
         git push origin "${major_version}.${minor_version}.${patch_version}"
     '''
+    }
 }
